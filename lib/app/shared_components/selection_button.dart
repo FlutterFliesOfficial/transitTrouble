@@ -1,6 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:hell_o/app/constans/app_constants.dart';
 import 'package:get/get.dart';
+import 'package:hell_o/app/constans/app_constants.dart';
+import 'package:hell_o/app/shared_components/repoort.dart';
+
+// Define your pages (for demonstration purposes)
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Home Page')),
+      body: Center(child: Text('This is the Home Page')),
+    );
+  }
+}
+
+class ProfilePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Report Page')),
+      body: Center(child: Text('This is the Profile Page')),
+    );
+  }
+}
 
 class SelectionButtonData {
   final IconData activeIcon;
@@ -54,6 +76,22 @@ class _SelectionButtonState extends State<SelectionButton> {
             selected: selected == index,
             onPressed: () {
               widget.onSelected(index, data);
+
+              // Navigate to a specific page based on index
+              switch (index) {
+                case 0:
+                  Get.to(HomePage()); // Navigate to Home Page
+                  break;
+                case 1:
+                  Get.to(ProfilePage()); // Navigate to Profile Page
+                  break;
+                case 2:
+                  Get.to(AdminReportPanel()); // Navigate to Settings Page
+                  break;
+                default:
+                  break;
+              }
+
               setState(() {
                 selected = index;
               });
