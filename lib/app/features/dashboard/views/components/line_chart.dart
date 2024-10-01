@@ -30,52 +30,62 @@ class _ViewLineChartState extends State<ViewLineChart> {
             show: false,
           ),
           titlesData: FlTitlesData(
-              show: true,
-              // topTitles: : ,
-              bottomTitles: AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: true,
-                  reservedSize: 22,
-                  // getTextStyles: (value) => TextStyle(
-                  //   color: lightTextColor,
-                  //   fontWeight: FontWeight.bold,
-                  //   fontSize: 14,
-                  // ),
-                  getTitlesWidget: (value, meta) {
-                    Widget text;
-                    switch (value.toInt()) {
-                      case 1:
-                        text = const Text('Sun');
-                        break;
-                      case 4:
-                        text = const Text('Mon');
-                        break;
-                      case 7:
-                        text = const Text('Tue');
-                        break;
-                      case 10:
-                        text = const Text('Wed');
-                        break;
-                      case 13:
-                        text = const Text('Thu');
-                        break;
-                      case 16:
-                        text = const Text('Fri');
-                        break;
-                      case 19:
-                        text = const Text('Sat');
-                        break;
-                      default:
-                        text = const Text('');
-                        break;
-                    }
-                    return SideTitleWidget(
-                      axisSide: meta.axisSide,
-                      child: text,
-                    );
-                  },
-                ),
-              )),
+            show: true,
+            // topTitles: : ,
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                reservedSize: 22,
+                // getTextStyles: (value) => TextStyle(
+                //   color: lightTextColor,
+                //   fontWeight: FontWeight.bold,
+                //   fontSize: 14,
+                // ),
+                getTitlesWidget: (value, meta) {
+                  Widget text;
+                  switch (value.toInt()) {
+                    case 1:
+                      text = const Text('Sun');
+                      break;
+                    case 4:
+                      text = const Text('Mon');
+                      break;
+                    case 7:
+                      text = const Text('Tue');
+                      break;
+                    case 10:
+                      text = const Text('Wed');
+                      break;
+                    case 13:
+                      text = const Text('Thu');
+                      break;
+                    case 16:
+                      text = const Text('Fri');
+                      break;
+                    case 19:
+                      text = const Text('Sat');
+                      break;
+                    default:
+                      text = const Text('');
+                      break;
+                  }
+                  return SideTitleWidget(
+                    axisSide: meta.axisSide,
+                    child: text,
+                  );
+                },
+              ),
+            ),
+            topTitles: AxisTitles(
+              sideTitles: SideTitles(showTitles: false), // Disable top titles
+            ),
+            leftTitles: AxisTitles(
+              sideTitles: SideTitles(showTitles: false), // Disable left titles
+            ),
+            rightTitles: AxisTitles(
+              sideTitles: SideTitles(showTitles: false), // Disable right titles
+            ),
+          ),
           borderData: FlBorderData(
             show: false,
           ),

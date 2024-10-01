@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "17828173450",
+    "project_id": "hell-o-e056c",
+    "storage_bucket": "hell-o-e056c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17828173450:android:5fbc23a18121d5bd847f73",
+        "android_client_info": {
+          "package_name": "com.example.hell_o"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8OqBEe7-Gv9zjKZa4CaNr9eakRmLyWUI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
