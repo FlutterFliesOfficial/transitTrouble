@@ -41,7 +41,7 @@ part '../components/sidebar.dart';
 part '../components/team_member.dart';
 
 class DashboardScreen extends GetView<DashboardController> {
-  DashboardScreen({Key? key}) : super(key: key);
+  const DashboardScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -180,19 +180,6 @@ class DashboardScreen extends GetView<DashboardController> {
     );
   }
 
-  // Example coordinates for the road
-  final List<LatLng> roadCoordinates = [
-    LatLng(37.7749, -122.4194), // Point A
-    LatLng(37.7849, -122.4094), // Point B
-  ];
-
-  // Example coordinates for the bridge
-  final List<LatLng> bridgeCoordinates = [
-    LatLng(37.7794, -122.4174), // Point C (Start of Bridge)
-    LatLng(37.7799, -122.4184), // Point D (End of Bridge)
-    LatLng(37.7797, -122.4190), // Point E (Middle of Bridge)
-  ];
-
   // Build the Mapbox map widget
   Widget _buildMap() {
     return Container(
@@ -200,10 +187,10 @@ class DashboardScreen extends GetView<DashboardController> {
       padding: const EdgeInsets.all(10),
       child: GoogleMap(
         // accessToken:
-        // 'pk.eyJ1IjoidGFuaXNocWJhZ3VsIiwiYSI6ImNtMXA2cWZiMzAxMjAyaXNqaWg5Y3BtNGQifQ.j5MxIrtA44LsjBXPbdvj_Q',
+            // 'pk.eyJ1IjoidGFuaXNocWJhZ3VsIiwiYSI6ImNtMXA2cWZiMzAxMjAyaXNqaWg5Y3BtNGQifQ.j5MxIrtA44LsjBXPbdvj_Q',
         initialCameraPosition: const CameraPosition(
-          target: LatLng(37.7749, -122.4194), // Set initial coordinates
-          zoom: 14, // Starting zoom level
+          target: LatLng(37.7749, -122.4194), // Starting coordinates
+          zoom: 12, // Starting zoom level
         ),
         onMapCreated: (GoogleMapController? controller) {
           if (controller != null) {
@@ -213,26 +200,7 @@ class DashboardScreen extends GetView<DashboardController> {
             print('Error: Mapbox controller is null.');
           }
         },
-        polylines: {
-          Polyline(
-            polylineId: PolylineId('road_polyline'),
-            points: roadCoordinates,
-            color: Colors.blue,
-            width: 5,
-          ),
-        },
-        polygons: {
-          Polygon(
-            polygonId: PolygonId('bridge_polygon'),
-            points: bridgeCoordinates,
-            strokeColor: Colors.red,
-            strokeWidth: 5,
-            fillColor: Colors.red.withOpacity(0.5), // Optional: fill color
-          ),
-        },
-        markers: {
-          Marker(markerId: MarkerId('1'), position: LatLng(37.7749, -122.4194))
-        },
+        markers : {Marker(markerId: MarkerId('1'), position: LatLng(37.7749, -122.4194))} ,
       ),
     );
   }
@@ -257,40 +225,99 @@ class DashboardScreen extends GetView<DashboardController> {
     );
   }
 
+  // Widget _buildTaskOverview({
+    
+  //   required List<TaskCardData> data,
+  //   int crossAxisCount = 6,
+  //   int crossAxisCellCount = 2,
+  //   Axis headerAxis = Axis.horizontal,
+  // }) {
+  //   return StaggeredGridView.countBuilder(
+  //     crossAxisCount: crossAxisCount,
+  //     itemCount: data.length + 1,
+  //     addAutomaticKeepAlives: false,
+  //     padding: const EdgeInsets.symmetric(horizontal: kSpacing),
+  //     shrinkWrap: true,
+  //     physics: const NeverScrollableScrollPhysics(),
+  //     itemBuilder: (context, index) {
+  //       return (index == 0)
+  //           ? Padding(
+  //               padding: const EdgeInsets.only(bottom: kSpacing),
+  //               child: _OverviewHeader(
+  //                 axis: headerAxis,
+  //                 onSelected: (task) {},
+  //               ),
+  //             )
+  //           : TaskCard(
+  //               data: data[index - 1],
+  //               onPressedMore: () {},
+  //               onPressedTask: () {},
+  //               onPressedContributors: () {},
+  //               onPressedComments: () {},
+  //             );
+  //     },
+  //     staggeredTileBuilder: (int index) =>
+  //         StaggeredTile.fit((index == 0) ? crossAxisCount : crossAxisCellCount),
+  //   );
+  // }
+
   Widget _buildTaskOverview({
-    required List<TaskCardData> data,
-    int crossAxisCount = 6,
-    int crossAxisCellCount = 2,
-    Axis headerAxis = Axis.horizontal,
-  }) {
-    return StaggeredGridView.countBuilder(
-      crossAxisCount: crossAxisCount,
-      itemCount: data.length + 1,
-      addAutomaticKeepAlives: false,
-      padding: const EdgeInsets.symmetric(horizontal: kSpacing),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        return (index == 0)
-            ? Padding(
-                padding: const EdgeInsets.only(bottom: kSpacing),
-                child: _OverviewHeader(
-                  axis: headerAxis,
-                  onSelected: (task) {},
-                ),
-              )
-            : TaskCard(
-                data: data[index - 1],
-                onPressedMore: () {},
-                onPressedTask: () {},
-                onPressedContributors: () {},
-                onPressedComments: () {},
-              );
-      },
-      staggeredTileBuilder: (int index) =>
-          StaggeredTile.fit((index == 0) ? crossAxisCount : crossAxisCellCount),
-    );
-  }
+  required List<TaskCardData> data,
+  int crossAxisCount = 6,
+  int crossAxisCellCount = 2,
+  Axis headerAxis = Axis.horizontal,
+}) {
+  return StaggeredGridView.countBuilder(
+    crossAxisCount: crossAxisCount,
+    itemCount: data.length + 1,
+    addAutomaticKeepAlives: false,
+    padding: const EdgeInsets.symmetric(horizontal: kSpacing),
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    itemBuilder: (context, index) {
+      return (index == 0)
+          ? Padding(
+              padding: const EdgeInsets.only(bottom: kSpacing),
+              child: _OverviewHeader(
+                axis: headerAxis,
+                onSelected: (task) {
+                  // Action for when a task is selected from header
+                  print("Header task selected: $task");
+                },
+              ),
+            )
+          : TaskCard(
+              data: data[index - 1],
+              onPressedMore: () {
+                // Define the action when "More" button is pressed
+                print("More button pressed for ${data[index - 1].title}");
+              },
+              onPressedTask: () {
+                // Define the action when the task card is pressed
+                if (data[index - 1].title == "transits") {
+                  // If the task is done, show a message
+                  print("transit implementation");
+                } else if (data[index - 1].title == "Bridges") {
+                  // Otherwise, show the task details
+                print("Bridges implementation");
+                } else {
+                  print("road ways implementation");
+              };},
+              onPressedContributors: () {
+                // Define the action when contributors are pressed
+                print("Contributors pressed for ${data[index - 1].title}");
+              },
+              onPressedComments: () {
+                // Define the action when comments are pressed
+                print("Comments pressed for ${data[index - 1].title}");
+              },
+            );
+    },
+    staggeredTileBuilder: (int index) =>
+        StaggeredTile.fit((index == 0) ? crossAxisCount : crossAxisCellCount),
+  );
+}
+
 
   Widget _buildProfile({required _Profile data}) {
     return Padding(
@@ -355,24 +382,23 @@ class DashboardScreen extends GetView<DashboardController> {
     ];
 
     // Iterate over the locations and add markers with labels
-    for (var location in locations) {
-      final marker = Marker(
-        markerId: MarkerId(location['label']), // Unique ID for each marker
-        position: LatLng(location['position'].latitude,
-            location['position'].longitude), // Marker position
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor
-            .hueRed), // Default Google Maps marker, you can customize
-        infoWindow: InfoWindow(
-          title: location['label'], // Display the label as an info window
-        ),
-      );
+for (var location in locations) {
+  final marker = Marker(
+    markerId: MarkerId(location['label']), // Unique ID for each marker
+    position: LatLng(location['position'].latitude, location['position'].longitude), // Marker position
+    icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed), // Default Google Maps marker, you can customize
+    infoWindow: InfoWindow(
+      title: location['label'], // Display the label as an info window
+    ),
+  );
 
-      // Add the marker to the map
-      // try {
-      //   GoogleMapController.addMarker(marker);
-      // } catch (e) {
-      //   print('Error adding marker: $e');
-      // }
-    }
+  // Add the marker to the map
+  // try {
+  //   GoogleMapController.addMarker(marker);
+  // } catch (e) {
+  //   print('Error adding marker: $e');
+  // }
+}
+
   }
 }
