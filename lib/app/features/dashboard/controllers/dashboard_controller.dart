@@ -4,16 +4,15 @@ part of dashboard;
 class DashboardController extends GetxController {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   GoogleMapController? mapController;
- // Add MapboxMapController
+  // Add MapboxMapController
 
   // Mapbox token
   final String mapboxAccessToken =
       'pk.eyJ1IjoidGFuaXNocWJhZ3VsIiwiYSI6ImNtMXA2cWZiMzAxMjAyaXNqaWg5Y3BtNGQifQ.j5MxIrtA44LsjBXPbdvj_Q'; // Replace with your Mapbox access token
 
- void onMapCreated(GoogleMapController controller) {
-  mapController = controller;
-}
-
+  void onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
 
   // Method to open the drawer
   void openDrawer() {
@@ -24,21 +23,6 @@ class DashboardController extends GetxController {
 
   // Method to build the Mapbox widget
   // Google Maps widget method
-Widget buildGoogleMap() {
-  return SizedBox(
-    height: 300, // Adjust the height based on your UI layout
-    child: GoogleMap(
-      initialCameraPosition: CameraPosition(
-        target: LatLng(37.7749, -122.4194), // Set initial coordinates
-        zoom: 10, // Adjust the zoom level
-      ),
-      onMapCreated: (GoogleMapController controller) {
-        mapController = controller;
-      },
-    ),
-  );
-}
-
 
   // Data retrieval methods remain the same
   _Profile getProfil() {

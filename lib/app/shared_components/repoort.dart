@@ -102,7 +102,7 @@ class Report {
 final List<Report> dummyReports = [
   Report(
       title: 'Bridge Inspection Report',
-      workerName: 'John Doe',
+      workerName: 'Manthan Parsekar',
       submissionDate: 'Oct 1, 2024',
       status: 'Pending'),
   Report(

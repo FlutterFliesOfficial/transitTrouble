@@ -41,7 +41,7 @@ part '../components/sidebar.dart';
 part '../components/team_member.dart';
 
 class DashboardScreen extends GetView<DashboardController> {
-  const DashboardScreen({Key? key}) : super(key: key);
+  DashboardScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -180,6 +180,19 @@ class DashboardScreen extends GetView<DashboardController> {
     );
   }
 
+  // Example coordinates for the road
+  final List<LatLng> roadCoordinates = [
+    LatLng(37.7749, -122.4194), // Point A
+    LatLng(37.7849, -122.4094), // Point B
+  ];
+
+  // Example coordinates for the bridge
+  final List<LatLng> bridgeCoordinates = [
+    LatLng(37.7794, -122.4174), // Point C (Start of Bridge)
+    LatLng(37.7799, -122.4184), // Point D (End of Bridge)
+    LatLng(37.7797, -122.4190), // Point E (Middle of Bridge)
+  ];
+
   // Build the Mapbox map widget
   Widget _buildMap() {
     return Container(
@@ -187,10 +200,10 @@ class DashboardScreen extends GetView<DashboardController> {
       padding: const EdgeInsets.all(10),
       child: GoogleMap(
         // accessToken:
-            // 'pk.eyJ1IjoidGFuaXNocWJhZ3VsIiwiYSI6ImNtMXA2cWZiMzAxMjAyaXNqaWg5Y3BtNGQifQ.j5MxIrtA44LsjBXPbdvj_Q',
+        // 'pk.eyJ1IjoidGFuaXNocWJhZ3VsIiwiYSI6ImNtMXA2cWZiMzAxMjAyaXNqaWg5Y3BtNGQifQ.j5MxIrtA44LsjBXPbdvj_Q',
         initialCameraPosition: const CameraPosition(
-          target: LatLng(37.7749, -122.4194), // Starting coordinates
-          zoom: 12, // Starting zoom level
+          target: LatLng(37.7749, -122.4194), // Set initial coordinates
+          zoom: 14, // Starting zoom level
         ),
         onMapCreated: (GoogleMapController? controller) {
           if (controller != null) {
@@ -200,7 +213,26 @@ class DashboardScreen extends GetView<DashboardController> {
             print('Error: Mapbox controller is null.');
           }
         },
-        markers : {Marker(markerId: MarkerId('1'), position: LatLng(37.7749, -122.4194))},
+        polylines: {
+          Polyline(
+            polylineId: PolylineId('road_polyline'),
+            points: roadCoordinates,
+            color: Colors.blue,
+            width: 5,
+          ),
+        },
+        polygons: {
+          Polygon(
+            polygonId: PolygonId('bridge_polygon'),
+            points: bridgeCoordinates,
+            strokeColor: Colors.red,
+            strokeWidth: 5,
+            fillColor: Colors.red.withOpacity(0.5), // Optional: fill color
+          ),
+        },
+        markers: {
+          Marker(markerId: MarkerId('1'), position: LatLng(37.7749, -122.4194))
+        },
       ),
     );
   }
@@ -323,23 +355,24 @@ class DashboardScreen extends GetView<DashboardController> {
     ];
 
     // Iterate over the locations and add markers with labels
-for (var location in locations) {
-  final marker = Marker(
-    markerId: MarkerId(location['label']), // Unique ID for each marker
-    position: LatLng(location['position'].latitude, location['position'].longitude), // Marker position
-    icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed), // Default Google Maps marker, you can customize
-    infoWindow: InfoWindow(
-      title: location['label'], // Display the label as an info window
-    ),
-  );
+    for (var location in locations) {
+      final marker = Marker(
+        markerId: MarkerId(location['label']), // Unique ID for each marker
+        position: LatLng(location['position'].latitude,
+            location['position'].longitude), // Marker position
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor
+            .hueRed), // Default Google Maps marker, you can customize
+        infoWindow: InfoWindow(
+          title: location['label'], // Display the label as an info window
+        ),
+      );
 
-  // Add the marker to the map
-  // try {
-  //   GoogleMapController.addMarker(marker);
-  // } catch (e) {
-  //   print('Error adding marker: $e');
-  // }
-}
-
+      // Add the marker to the map
+      // try {
+      //   GoogleMapController.addMarker(marker);
+      // } catch (e) {
+      //   print('Error adding marker: $e');
+      // }
+    }
   }
 }
