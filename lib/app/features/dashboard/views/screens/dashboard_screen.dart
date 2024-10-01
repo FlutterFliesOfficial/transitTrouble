@@ -200,7 +200,7 @@ class DashboardScreen extends GetView<DashboardController> {
             print('Error: Mapbox controller is null.');
           }
         },
-        markers : {Marker(markerId: MarkerId('1'), position: LatLng(37.7749, -122.4194))},
+        markers : {Marker(markerId: MarkerId('1'), position: LatLng(37.7749, -122.4194))} ,
       ),
     );
   }
@@ -225,40 +225,99 @@ class DashboardScreen extends GetView<DashboardController> {
     );
   }
 
+  // Widget _buildTaskOverview({
+    
+  //   required List<TaskCardData> data,
+  //   int crossAxisCount = 6,
+  //   int crossAxisCellCount = 2,
+  //   Axis headerAxis = Axis.horizontal,
+  // }) {
+  //   return StaggeredGridView.countBuilder(
+  //     crossAxisCount: crossAxisCount,
+  //     itemCount: data.length + 1,
+  //     addAutomaticKeepAlives: false,
+  //     padding: const EdgeInsets.symmetric(horizontal: kSpacing),
+  //     shrinkWrap: true,
+  //     physics: const NeverScrollableScrollPhysics(),
+  //     itemBuilder: (context, index) {
+  //       return (index == 0)
+  //           ? Padding(
+  //               padding: const EdgeInsets.only(bottom: kSpacing),
+  //               child: _OverviewHeader(
+  //                 axis: headerAxis,
+  //                 onSelected: (task) {},
+  //               ),
+  //             )
+  //           : TaskCard(
+  //               data: data[index - 1],
+  //               onPressedMore: () {},
+  //               onPressedTask: () {},
+  //               onPressedContributors: () {},
+  //               onPressedComments: () {},
+  //             );
+  //     },
+  //     staggeredTileBuilder: (int index) =>
+  //         StaggeredTile.fit((index == 0) ? crossAxisCount : crossAxisCellCount),
+  //   );
+  // }
+
   Widget _buildTaskOverview({
-    required List<TaskCardData> data,
-    int crossAxisCount = 6,
-    int crossAxisCellCount = 2,
-    Axis headerAxis = Axis.horizontal,
-  }) {
-    return StaggeredGridView.countBuilder(
-      crossAxisCount: crossAxisCount,
-      itemCount: data.length + 1,
-      addAutomaticKeepAlives: false,
-      padding: const EdgeInsets.symmetric(horizontal: kSpacing),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        return (index == 0)
-            ? Padding(
-                padding: const EdgeInsets.only(bottom: kSpacing),
-                child: _OverviewHeader(
-                  axis: headerAxis,
-                  onSelected: (task) {},
-                ),
-              )
-            : TaskCard(
-                data: data[index - 1],
-                onPressedMore: () {},
-                onPressedTask: () {},
-                onPressedContributors: () {},
-                onPressedComments: () {},
-              );
-      },
-      staggeredTileBuilder: (int index) =>
-          StaggeredTile.fit((index == 0) ? crossAxisCount : crossAxisCellCount),
-    );
-  }
+  required List<TaskCardData> data,
+  int crossAxisCount = 6,
+  int crossAxisCellCount = 2,
+  Axis headerAxis = Axis.horizontal,
+}) {
+  return StaggeredGridView.countBuilder(
+    crossAxisCount: crossAxisCount,
+    itemCount: data.length + 1,
+    addAutomaticKeepAlives: false,
+    padding: const EdgeInsets.symmetric(horizontal: kSpacing),
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    itemBuilder: (context, index) {
+      return (index == 0)
+          ? Padding(
+              padding: const EdgeInsets.only(bottom: kSpacing),
+              child: _OverviewHeader(
+                axis: headerAxis,
+                onSelected: (task) {
+                  // Action for when a task is selected from header
+                  print("Header task selected: $task");
+                },
+              ),
+            )
+          : TaskCard(
+              data: data[index - 1],
+              onPressedMore: () {
+                // Define the action when "More" button is pressed
+                print("More button pressed for ${data[index - 1].title}");
+              },
+              onPressedTask: () {
+                // Define the action when the task card is pressed
+                if (data[index - 1].title == "transits") {
+                  // If the task is done, show a message
+                  print("transit implementation");
+                } else if (data[index - 1].title == "Bridges") {
+                  // Otherwise, show the task details
+                print("Bridges implementation");
+                } else {
+                  print("road ways implementation");
+              };},
+              onPressedContributors: () {
+                // Define the action when contributors are pressed
+                print("Contributors pressed for ${data[index - 1].title}");
+              },
+              onPressedComments: () {
+                // Define the action when comments are pressed
+                print("Comments pressed for ${data[index - 1].title}");
+              },
+            );
+    },
+    staggeredTileBuilder: (int index) =>
+        StaggeredTile.fit((index == 0) ? crossAxisCount : crossAxisCellCount),
+  );
+}
+
 
   Widget _buildProfile({required _Profile data}) {
     return Padding(
