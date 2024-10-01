@@ -3,6 +3,7 @@ library dashboard;
 import 'dart:developer';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hell_o/app/constans/app_constants.dart';
 import 'package:hell_o/app/features/dashboard/views/components/line_chart.dart';
 import 'package:hell_o/app/shared_components/chatting_card.dart';
@@ -19,7 +20,7 @@ import 'package:hell_o/app/utils/helpers/app_helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:mapbox_gl/mapbox_gl.dart';
+// import 'package:mapbox_gl/mapbox_gl.dart';
 
 // binding
 part '../../bindings/dashboard_binding.dart';
@@ -184,14 +185,14 @@ class DashboardScreen extends GetView<DashboardController> {
     return Container(
       height: 400,
       padding: const EdgeInsets.all(10),
-      child: MapboxMap(
-        accessToken:
-            'pk.eyJ1IjoidGFuaXNocWJhZ3VsIiwiYSI6ImNtMXA2cWZiMzAxMjAyaXNqaWg5Y3BtNGQifQ.j5MxIrtA44LsjBXPbdvj_Q',
+      child: GoogleMap(
+        // accessToken:
+            // 'pk.eyJ1IjoidGFuaXNocWJhZ3VsIiwiYSI6ImNtMXA2cWZiMzAxMjAyaXNqaWg5Y3BtNGQifQ.j5MxIrtA44LsjBXPbdvj_Q',
         initialCameraPosition: const CameraPosition(
           target: LatLng(37.7749, -122.4194), // Starting coordinates
           zoom: 12, // Starting zoom level
         ),
-        onMapCreated: (MapboxMapController? controller) {
+        onMapCreated: (GoogleMapController? controller) {
           if (controller != null) {
             // Add multiple markers to the map
             _addMarkers(controller);
@@ -199,6 +200,7 @@ class DashboardScreen extends GetView<DashboardController> {
             print('Error: Mapbox controller is null.');
           }
         },
+        markers : {Marker(markerId: MarkerId('1'), position: LatLng(37.7749, -122.4194))},
       ),
     );
   }
@@ -310,7 +312,7 @@ class DashboardScreen extends GetView<DashboardController> {
     ]);
   }
 
-  void _addMarkers(MapboxMapController controller) {
+  void _addMarkers(GoogleMapController controller) {
     // Define locations and labels for the markers
     final List<Map<String, dynamic>> locations = [
       {'position': LatLng(37.7749, -122.4194), 'label': 'San Francisco'},
@@ -321,24 +323,23 @@ class DashboardScreen extends GetView<DashboardController> {
     ];
 
     // Iterate over the locations and add markers with labels
-    for (var location in locations) {
-      final symbolOptions = SymbolOptions(
-        geometry: location['position'],
-        iconImage: "marker-15", // Use Mapbox's built-in marker icon
-        iconSize: 1.5, // Adjust the size of the icon
-        textField: location['label'], // Display the label
-        textSize: 12.0, // Adjust the label size
-        textOffset:
-            const Offset(0, 1.5), // Adjust text position relative to the marker
-        textColor: '#000000', // Text color (black)
-      );
+for (var location in locations) {
+  final marker = Marker(
+    markerId: MarkerId(location['label']), // Unique ID for each marker
+    position: LatLng(location['position'].latitude, location['position'].longitude), // Marker position
+    icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed), // Default Google Maps marker, you can customize
+    infoWindow: InfoWindow(
+      title: location['label'], // Display the label as an info window
+    ),
+  );
 
-      // Add the marker to the map with a label
-      try {
-        controller.addSymbol(symbolOptions);
-      } catch (e) {
-        print('Error adding marker: $e');
-      }
-    }
+  // Add the marker to the map
+  // try {
+  //   GoogleMapController.addMarker(marker);
+  // } catch (e) {
+  //   print('Error adding marker: $e');
+  // }
+}
+
   }
 }

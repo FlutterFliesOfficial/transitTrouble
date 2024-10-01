@@ -6,6 +6,11 @@
         <meta-data
         android:name="com.mapbox.token"
         android:value="pk.eyJ1IjoidGFuaXNocWJhZ3VsIiwiYSI6ImNtMXA2cWZiMzAxMjAyaXNqaWg5Y3BtNGQifQ.j5MxIrtA44LsjBXPbdvj_Q"/>
+
+        <!-- TODO: Add your Google Maps API key here -->
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyC4izvW_mMt8lNapzkeLMVWGRLhFEkmOJc"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
